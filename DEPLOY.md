@@ -115,7 +115,8 @@ Set these variables on `crewai-server`:
 | `AGENT_BASE_URL` | The public address of the agents service from step 4, without a trailing slash (replaces the placeholder). |
 | `AGENT_SHARED_SECRET` | The same secret as the agents service. |
 | `ALLOWED_ORIGIN` | The address of the site on Vercel. Not known yet: leave the placeholder and replace it in step 7. |
-| `RATE_LIMIT` | Runs that one address may start per hour. `render.yaml` sets `5`. |
+| `RATE_LIMIT` | Runs that one address may start per hour. `render.yaml` sets `20`. Gemini's own quota is the real limit; raising this number does not raise it. |
+| `AGENT_TIMEOUT_MS` | The longest a run may take, in milliseconds. `render.yaml` sets `900000` (15 minutes). A free instance has 0.1 CPU, the agents service may first need about a minute to start, and a rate-limited model call waits and retries, so the earlier limit of 5 minutes was too short for some projects. |
 | `TRUST_PROXY` | `1` (set by `render.yaml`). See the note below. |
 
 The server refuses to start in production if the secret is missing, if `ALLOWED_ORIGIN` is `*`, or if `AGENT_BASE_URL` has no `http://` or `https://`. The Render log then shows the reason.

@@ -40,6 +40,8 @@ services:
       - key: ALLOWED_ORIGIN # the address of the site on Vercel, without a trailing slash
         sync: false
       - key: RATE_LIMIT # runs that one address may start per hour
-        value: "5"
+        value: "20"
+      - key: AGENT_TIMEOUT_MS # the longest a run (or a part of one) may take: 15 minutes
+        value: "900000"
       - key: TRUST_PROXY # the number of proxies in front of the server; see DEPLOY.md, step 5
         value: "1"

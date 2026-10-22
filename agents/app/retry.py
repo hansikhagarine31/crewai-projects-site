@@ -7,7 +7,7 @@ doing. Errors that are not rate limits are never retried.
 Choice: up to three retries, after about 10, 20 and 40 seconds (each varied by up to 20 per cent so that
 calls made together do not retry together). If the API says how long to wait ("retry in 14s"), that is used
 when it is longer, up to 90 seconds. The longest total wait is about 70 seconds, which covers one
-per-minute window and still finishes inside the server's five-minute limit.
+per-minute window and still finishes well inside the server's limit (AGENT_TIMEOUT_MS, 15 minutes by default).
 """
 import random
 import re

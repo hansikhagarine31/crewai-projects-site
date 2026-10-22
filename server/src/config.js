@@ -37,7 +37,7 @@ export function loadConfig(env = process.env) {
     rateLimitWindowMs: num('RATE_LIMIT_WINDOW_MS', 60 * 60 * 1000),
     maxConcurrentRuns: num('MAX_CONCURRENT_RUNS', 3),
 
-    agentTimeoutMs: num('AGENT_TIMEOUT_MS', 5 * 60 * 1000),
+    agentTimeoutMs: num('AGENT_TIMEOUT_MS', 15 * 60 * 1000),
     runTtlMs: num('RUN_TTL_MS', 30 * 60 * 1000),
     awaitingUploadTtlMs: num('AWAITING_UPLOAD_TTL_MS', 10 * 60 * 1000),
     // How long a run may wait for a person's decision. The agents service deletes the stored draft after the same time.

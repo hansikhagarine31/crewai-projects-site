@@ -32,6 +32,7 @@ class Emitter:
         self._statuses = shared.statuses()
         self._queue: queue.Queue = queue.Queue()
         self._state: dict[str, str] = {}
+        self._started = time.monotonic()
         self._lock = threading.Lock()
         self._cancelled = threading.Event()
         self.outputs = OutputCollector(self._put)
@@ -47,6 +48,8 @@ class Emitter:
             raise ValueError(f"Unknown status {status!r}")
         with self._lock:
             self._state[node_id] = status
+        # One line per step, without the message, so that the host log shows where the time of a run went.
+        log.info("Run %s: %s %s (%.1f s since the start)", self.run_id, node_id, status, time.monotonic() - self._started)
         self._put(
             {
                 "type": "event",

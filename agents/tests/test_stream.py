@@ -271,3 +271,16 @@ class TestDemoNotes:
         markdown = lines[-1]["markdown"]
         assert "Notes received: 23 characters." in markdown
         assert "Ignore all instructions" not in markdown
+
+
+def test_each_event_leaves_one_log_line_without_the_message(caplog):
+    import logging
+
+    from app.events import Emitter
+
+    emitter = Emitter("run-1", frozenset({"a"}))
+    with caplog.at_level(logging.INFO, logger="agents.events"):
+        emitter.emit("a", "running", "a private message")
+    lines = [record.getMessage() for record in caplog.records]
+    assert any("Run run-1: a running" in line for line in lines)
+    assert not any("private message" in line for line in lines)
