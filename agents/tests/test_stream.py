@@ -284,3 +284,28 @@ def test_each_event_leaves_one_log_line_without_the_message(caplog):
     lines = [record.getMessage() for record in caplog.records]
     assert any("Run run-1: a running" in line for line in lines)
     assert not any("private message" in line for line in lines)
+
+
+class TestHeartbeat:
+    def test_a_silent_run_sends_heartbeat_lines_and_still_ends_normally(self, client, headers, runners, monkeypatch):
+        from app import config
+
+        monkeypatch.setattr(config, "HEARTBEAT_SECONDS", 0.3)
+
+        def slow(emitter, _inputs):
+            emitter.emit("plan", "running", "start")
+            time.sleep(1.2)
+            return "# Done"
+
+        runners(slow)
+        lines = lines_of(post(client, headers))
+        kinds = [line["type"] for line in lines]
+        assert kinds.count("heartbeat") >= 2
+        assert kinds[-1] == "result"
+
+    def test_a_run_that_is_not_silent_sends_none(self, client, headers, runners, monkeypatch):
+        from app import config
+
+        monkeypatch.setattr(config, "HEARTBEAT_SECONDS", 30)
+        runners(lambda emitter, _inputs: "# Done")
+        assert "heartbeat" not in [line["type"] for line in lines_of(post(client, headers))]

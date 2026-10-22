@@ -27,6 +27,7 @@ The agents service must implement this exactly. `server/` is the only caller.
 | `{"type":"event","runId","nodeId","status","message","ts"}` | A node changed state: the event contract plus `type`. `nodeId` must be listed for the project in `shared/projects.json`; `status` must be one of the six permitted values; `ts` is milliseconds since the epoch. Lines that break this are discarded. |
 | `{"type":"result","markdown":"..."}` | The final output. The run is `done` only if one is received. |
 | `{"type":"file","name","content","encoding":"utf-8"\|"base64"}` | An output file. `server/` reduces `name` to `[A-Za-z0-9._-]` and chooses the content type from the extension. |
+| `{"type":"heartbeat"}` | Sent every 10 seconds while the run is silent, so that no proxy closes the connection as idle. `server/` ignores it. |
 | `{"type":"error","message"}` | The run failed. The run is `error` and `message` is shown to the user, so it contains nothing sensitive. |
 
 If the connection closes without a `result` or `error` line the run is recorded as failed.

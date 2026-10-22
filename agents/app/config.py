@@ -17,6 +17,10 @@ HOST = os.getenv("AGENT_HOST", "127.0.0.1")
 # Hosts such as Render give the port to listen on in PORT.
 PORT = int(os.getenv("AGENT_PORT") or os.getenv("PORT") or "8001")
 
+# While a run is silent (for example during a long model call) the stream sends a heartbeat line this often, so that
+# no proxy or client timeout closes a connection that looks idle.
+HEARTBEAT_SECONDS = float(os.getenv("HEARTBEAT_SECONDS", "10"))
+
 # Limits. The server applies the same total output limit.
 LLM_MAX_OUTPUT_TOKENS = int(os.getenv("LLM_MAX_OUTPUT_TOKENS", "8192"))
 SEARCH_MAX_RESULTS = 5

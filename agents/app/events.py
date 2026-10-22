@@ -187,12 +187,17 @@ async def stream_run(
     """Runs the project in a worker thread and yields NDJSON lines as they are produced."""
     worker = threading.Thread(target=_work, args=(runner, emitter, inputs), daemon=True, name=f"run-{emitter.run_id}")
     worker.start()
+    last_sent = time.monotonic()
     try:
         while True:
             try:
                 item = await asyncio.to_thread(emitter.get, 0.25)
             except queue.Empty:
+                if time.monotonic() - last_sent >= config.HEARTBEAT_SECONDS:
+                    last_sent = time.monotonic()
+                    yield encode({"type": "heartbeat"})
                 continue
+            last_sent = time.monotonic()
             if item is _DONE:
                 return
             try:
