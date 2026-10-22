@@ -1,0 +1,40 @@
+{
+  "projectId": "content-repurposing-flow",
+  "emitted": {
+    "and_": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "extract_points": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "linkedin_crew": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "load_article": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "newsletter_crew": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "publish_pack": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "twitter_crew": [
+      "done",
+      "pending",
+      "running"
+    ]
+  }
+}

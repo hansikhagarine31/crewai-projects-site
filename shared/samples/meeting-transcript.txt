@@ -1,0 +1,29 @@
+Weekly product meeting, 4 March. Present: Priya (product), Tom (engineering), Elena (finance), Marcus (support).
+
+Priya: Let's start with the launch. Where are we on the new reporting feature?
+
+Tom: Engineering is about two weeks behind. The export module needs more testing. I think we should move the launch from March to April.
+
+Priya: Agreed. Does anyone object? No? Then we are moving the launch to April. I will tell the sales team today.
+
+Elena: On budget, I need the revised cost estimate for the hosting change. Tom, can you send that to me by Friday?
+
+Tom: Yes, I will send the revised estimate to Elena by Friday.
+
+Elena: Thanks. Also, the vendor contract needs to be signed before 14 March, otherwise we lose the current price.
+
+Priya: Understood. We will keep the current vendor, then. I do not want to switch suppliers this close to the launch.
+
+Marcus: Support has had a lot of questions about the old dashboard. Priya, could you update the onboarding guide?
+
+Priya: I will update the onboarding guide, but I cannot say when I will have time.
+
+Marcus: Fine. One more thing: someone should look into why the logging costs doubled last month.
+
+Elena: Good point, nobody owns that at the moment. Let's leave it open for now.
+
+Priya: Last item. Do we hire a contractor for the export testing?
+
+Tom: I would rather not. The team can manage it if the launch moves to April.
+
+Priya: Then it is decided: no contractor. Thanks everyone, we will meet again next Tuesday.

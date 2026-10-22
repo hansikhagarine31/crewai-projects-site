@@ -1,0 +1,35 @@
+{
+  "projectId": "meeting-notes-crew",
+  "emitted": {
+    "action_finder": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "decision_logger": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "formatter": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "input": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "output": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "summarizer": [
+      "done",
+      "pending",
+      "running"
+    ]
+  }
+}

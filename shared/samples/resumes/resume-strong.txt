@@ -1,0 +1,18 @@
+Alex Morgan (made-up sample resume for testing)
+Female, aged 41, British national, photo attached
+
+Summary
+Data analyst with six years of experience in finance reporting.
+
+Experience
+Senior Data Analyst, Northfield Retail (2021 to present)
+- Wrote SQL queries against a 40-table reporting database to produce weekly sales and margin reports.
+- Built and maintained 12 dashboards used by the finance team.
+- Automated the monthly close report with Python, reducing manual work from two days to half a day.
+- Presented findings to non-technical managers every month.
+
+Data Analyst, Brightwater Insurance (2018 to 2021)
+- Analysed claims data and prepared quarterly summaries for the finance director.
+
+Skills
+SQL, Python, Excel, dashboard design, financial reporting

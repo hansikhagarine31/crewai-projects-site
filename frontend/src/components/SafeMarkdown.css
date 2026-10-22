@@ -1,0 +1,98 @@
+.markdown {
+  overflow-wrap: anywhere;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.markdown > * + * {
+  margin-top: 0.9em;
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4 {
+  margin-top: 1.4em;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.markdown h1 { font-size: 1.5rem; }
+.markdown h2 { font-size: 1.3rem; }
+.markdown h3 { font-size: 1.15rem; }
+.markdown h4 { font-size: 1.05rem; }
+
+.markdown > :first-child {
+  margin-top: 0;
+}
+
+.markdown ul,
+.markdown ol {
+  padding-left: 1.4em;
+}
+
+.markdown li + li {
+  margin-top: 0.25em;
+}
+
+.markdown a {
+  color: var(--coral-d);
+}
+
+.markdown blockquote {
+  padding-left: 14px;
+  color: var(--ink2);
+  border-left: 4px solid var(--coral-l);
+}
+
+.markdown code {
+  padding: 1px 5px;
+  font-family: var(--mono);
+  font-size: 0.9em;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+.markdown pre {
+  padding: 12px 14px;
+  overflow-x: auto;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.markdown pre code {
+  padding: 0;
+  background: none;
+  border: 0;
+}
+
+.markdown table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+}
+
+.markdown th,
+.markdown td {
+  padding: 6px 12px;
+  text-align: left;
+  vertical-align: top;
+  border: 1px solid var(--line);
+}
+
+.markdown th {
+  background: #fff;
+}
+
+.markdown hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
+/* A hit area of at least 24 px for links that stand alone in a list item */
+.markdown a {
+  padding-block: 3px;
+}

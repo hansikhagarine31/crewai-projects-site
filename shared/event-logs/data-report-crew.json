@@ -1,0 +1,30 @@
+{
+  "projectId": "data-report-crew",
+  "emitted": {
+    "data_analyst": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "input": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "insight_writer": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "output": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "reviewer": [
+      "done",
+      "pending",
+      "running"
+    ]
+  }
+}

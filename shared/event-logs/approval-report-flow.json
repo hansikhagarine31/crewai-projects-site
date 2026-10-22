@@ -1,0 +1,42 @@
+{
+  "projectId": "approval-report-flow",
+  "emitted": {
+    "check_decision": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "collect_topic": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "publish_report": [
+      "done",
+      "pending",
+      "running",
+      "skipped"
+    ],
+    "research_crew": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "review_draft": [
+      "done",
+      "pending",
+      "waiting"
+    ],
+    "revision_crew": [
+      "done",
+      "pending",
+      "running",
+      "skipped"
+    ],
+    "writing_crew": [
+      "done",
+      "pending",
+      "running"
+    ]
+  }
+}

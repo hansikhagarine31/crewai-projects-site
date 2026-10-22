@@ -1,0 +1,12 @@
+.disclaimer {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 24px var(--gutter) 40px;
+  border-top: 1px solid var(--line);
+  color: var(--ink2);
+  font-size: 0.95rem;
+}
+
+.disclaimer p {
+  max-width: 70ch;
+}

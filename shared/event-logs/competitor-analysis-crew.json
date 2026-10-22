@@ -1,0 +1,43 @@
+{
+  "projectId": "competitor-analysis-crew",
+  "emitted": {
+    "input": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "manager": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "news_analyst": [
+      "done",
+      "error",
+      "pending",
+      "running"
+    ],
+    "output": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "pricing_analyst": [
+      "done",
+      "error",
+      "pending",
+      "running"
+    ],
+    "site_scraper": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "strategist": [
+      "done",
+      "error",
+      "pending",
+      "running"
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+Data Analyst, Finance Operations (made-up job description for testing)
+
+We are looking for a data analyst to join a small finance operations team.
+
+Requirements:
+- At least three years of experience analysing business data
+- Strong SQL skills
+- Experience building dashboards or regular reports
+- Working knowledge of Python or another scripting language
+- Clear written communication with non-technical colleagues
+
+Helpful but not required:
+- Experience in finance or accounting
+- Experience automating manual reporting

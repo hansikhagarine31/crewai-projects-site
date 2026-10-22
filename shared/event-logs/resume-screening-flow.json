@@ -1,0 +1,43 @@
+{
+  "projectId": "resume-screening-flow",
+  "emitted": {
+    "check_score": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "draft_rejection": [
+      "done",
+      "pending",
+      "running",
+      "skipped"
+    ],
+    "load_resumes": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "or_": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "save_results": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "score_resume": [
+      "done",
+      "error",
+      "pending",
+      "running"
+    ],
+    "summary_crew": [
+      "done",
+      "pending",
+      "running",
+      "skipped"
+    ]
+  }
+}

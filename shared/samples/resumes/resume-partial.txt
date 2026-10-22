@@ -1,0 +1,17 @@
+Sam Taylor (made-up sample resume for testing)
+Male, 27 years old, nationality: Canadian
+
+Summary
+Analyst with two years of experience in marketing reporting.
+
+Experience
+Marketing Analyst, Lakeside Media (2024 to present)
+- Produced weekly campaign reports in spreadsheets.
+- Wrote basic SQL queries to export campaign data.
+- Learning Python for report automation.
+
+Education
+BSc Economics
+
+Skills
+Excel, basic SQL, presentations

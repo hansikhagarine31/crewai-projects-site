@@ -1,0 +1,81 @@
+# Runs server/ and agents/ together for local use. The frontend is not part of this file: run it with `npm run dev`
+# in frontend/, which proxies /api to http://localhost:8000.
+#
+# Setup:
+#   1. Copy .env.example to .env and set AGENT_SHARED_SECRET to a long random value.
+#   2. Copy agents/.env.example to agents/.env and set GEMINI_API_KEY there. The key is given to the agents service only.
+#   3. docker compose up --build
+#
+# Networks
+#   backend  internal, no route outside Docker. The only network that server and agents share.
+#   public   the server only. Its port is published on 127.0.0.1.
+#   egress   the agents service only. It lets agents reach Gemini and DuckDuckGo; nothing is published on it.
+# The agents service publishes no port, so nothing outside the backend network (including the host) can reach it.
+services:
+  agents:
+    build:
+      context: .
+      dockerfile: agents/Dockerfile
+    env_file:
+      - path: ./agents/.env
+        required: false
+    environment:
+      AGENT_SHARED_SECRET: ${AGENT_SHARED_SECRET:?Set AGENT_SHARED_SECRET in .env}
+    volumes:
+      - agents-state:/var/lib/agents/state
+    networks:
+      - backend
+      - egress
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request as u; u.urlopen('http://127.0.0.1:8001/health', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 40s
+    restart: unless-stopped
+    # Not read-only: CrewAI writes its own small files under the home directory of the service user.
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+
+  server:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    environment:
+      AGENT_SHARED_SECRET: ${AGENT_SHARED_SECRET:?Set AGENT_SHARED_SECRET in .env}
+      AGENTS_URL: http://agents:8001
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:5173}
+      PORT: "8000"
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      agents:
+        condition: service_healthy
+    networks:
+      - backend
+      - public
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8000/api/health').then((r) => process.exit(r.status === 200 ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 10s
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+
+networks:
+  backend:
+    internal: true
+  public: {}
+  egress: {}
+
+volumes:
+  agents-state: {}

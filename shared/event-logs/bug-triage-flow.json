@@ -1,0 +1,48 @@
+{
+  "projectId": "bug-triage-flow",
+  "emitted": {
+    "answer_crew": [
+      "done",
+      "pending",
+      "running",
+      "skipped"
+    ],
+    "bug_crew": [
+      "done",
+      "pending",
+      "running",
+      "skipped"
+    ],
+    "classify_issue": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "feature_crew": [
+      "done",
+      "pending",
+      "running",
+      "skipped"
+    ],
+    "or_": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "post_reply": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "read_issue": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "route_type": [
+      "done",
+      "pending",
+      "running"
+    ]
+  }
+}

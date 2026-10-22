@@ -1,0 +1,30 @@
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  justify-content: center;
+  list-style: none;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend__swatch {
+  display: inline-block;
+  width: 22px;
+  height: 14px;
+  border-radius: 4px;
+  border: 1.5px solid var(--line);
+  background: var(--tint);
+}
+
+.legend__swatch--input { background: var(--ink); border-color: var(--ink); }
+.legend__swatch--output { background: var(--coral); border-color: var(--coral); }
+.legend__swatch--router { background: #fff; border: 2px solid var(--coral); }
+.legend__swatch--dashed { background: #fff; border: 1.5px dashed var(--muted); }
+.legend__swatch--crew { border-top: 3px solid var(--coral); }

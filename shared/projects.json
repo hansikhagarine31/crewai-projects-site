@@ -1,0 +1,831 @@
+{
+  "version": 1,
+  "statuses": [
+    "pending",
+    "running",
+    "done",
+    "error",
+    "waiting",
+    "skipped"
+  ],
+  "projects": [
+    {
+      "id": "blog-post-crew",
+      "number": 1,
+      "title": "Blog Post Crew",
+      "type": "Crew",
+      "pattern": "Sequential",
+      "cacheable": true,
+      "inputs": [
+        {
+          "key": "topic",
+          "label": "Topic",
+          "type": "text",
+          "required": true,
+          "minLength": 3,
+          "maxLength": 200
+        }
+      ],
+      "nodes": [
+        {
+          "nodeId": "input",
+          "kind": "input",
+          "name": "topic",
+          "tag": "Input",
+          "detail": "e.g. AI in farming"
+        },
+        {
+          "nodeId": "researcher",
+          "kind": "step",
+          "name": "Researcher",
+          "tag": "Agent 1",
+          "detail": "DuckDuckGo search"
+        },
+        {
+          "nodeId": "writer",
+          "kind": "step",
+          "name": "Writer",
+          "tag": "Agent 2",
+          "detail": "600-word draft"
+        },
+        {
+          "nodeId": "editor",
+          "kind": "step",
+          "name": "Editor",
+          "tag": "Agent 3",
+          "detail": "Fixes tone and facts"
+        },
+        {
+          "nodeId": "output",
+          "kind": "output",
+          "name": "blog_post.md",
+          "tag": "Output",
+          "detail": "Saved by FileWriter"
+        }
+      ]
+    },
+    {
+      "id": "competitor-analysis-crew",
+      "number": 2,
+      "title": "Competitor Analysis Crew",
+      "type": "Crew",
+      "pattern": "Hierarchical",
+      "cacheable": true,
+      "inputs": [
+        {
+          "key": "competitors",
+          "label": "Competitor websites",
+          "type": "urls",
+          "required": true,
+          "minItems": 1,
+          "maxItems": 3
+        }
+      ],
+      "nodes": [
+        {
+          "nodeId": "input",
+          "kind": "input",
+          "name": "competitors",
+          "tag": "Input",
+          "detail": "3 website URLs"
+        },
+        {
+          "nodeId": "manager",
+          "kind": "step",
+          "name": "manager_llm",
+          "tag": "Manager agent",
+          "detail": "Splits and assigns"
+        },
+        {
+          "nodeId": "site_scraper",
+          "kind": "step",
+          "name": "Site Scraper",
+          "tag": "Agent",
+          "detail": "ScrapeWebsiteTool"
+        },
+        {
+          "nodeId": "pricing_analyst",
+          "kind": "step",
+          "name": "Pricing Analyst",
+          "tag": "Agent",
+          "detail": "Reads plans, prices"
+        },
+        {
+          "nodeId": "news_analyst",
+          "kind": "step",
+          "name": "News Analyst",
+          "tag": "Agent",
+          "detail": "DuckDuckGo search"
+        },
+        {
+          "nodeId": "strategist",
+          "kind": "step",
+          "name": "Strategist",
+          "tag": "Agent",
+          "detail": "Builds a SWOT table"
+        },
+        {
+          "nodeId": "output",
+          "kind": "output",
+          "name": "report.md",
+          "tag": "Output",
+          "detail": "Saved by FileWriter"
+        }
+      ]
+    },
+    {
+      "id": "meeting-notes-crew",
+      "number": 3,
+      "title": "Meeting Notes Crew",
+      "type": "Crew",
+      "pattern": "Parallel tasks",
+      "cacheable": true,
+      "inputs": [
+        {
+          "key": "transcript",
+          "label": "Meeting transcript",
+          "type": "text",
+          "required": true,
+          "minLength": 20,
+          "maxLength": 30000,
+          "multiline": true
+        },
+        {
+          "key": "transcript_file",
+          "label": "Transcript file",
+          "type": "file",
+          "required": false,
+          "extensions": [
+            ".txt"
+          ],
+          "maxFiles": 1,
+          "textInto": "transcript",
+          "hint": "The text of the file is used as the transcript. If a transcript is also pasted above, the file is used instead."
+        }
+      ],
+      "requireAnyOf": [
+        "transcript",
+        "transcript_file"
+      ],
+      "nodes": [
+        {
+          "nodeId": "input",
+          "kind": "input",
+          "name": "transcript.txt",
+          "tag": "Input",
+          "detail": "FileReadTool"
+        },
+        {
+          "nodeId": "summarizer",
+          "kind": "step",
+          "name": "Summarizer",
+          "tag": "Task",
+          "detail": "5-line summary"
+        },
+        {
+          "nodeId": "action_finder",
+          "kind": "step",
+          "name": "Action Finder",
+          "tag": "Task",
+          "detail": "Owner and due date"
+        },
+        {
+          "nodeId": "decision_logger",
+          "kind": "step",
+          "name": "Decision Logger",
+          "tag": "Task",
+          "detail": "Decisions made"
+        },
+        {
+          "nodeId": "formatter",
+          "kind": "step",
+          "name": "Formatter",
+          "tag": "Agent",
+          "detail": "Waits for all three"
+        },
+        {
+          "nodeId": "output",
+          "kind": "output",
+          "name": "notes.md",
+          "tag": "Output",
+          "detail": "Summary, actions, decisions"
+        }
+      ]
+    },
+    {
+      "id": "data-report-crew",
+      "number": 4,
+      "title": "Data Report Crew",
+      "type": "Crew",
+      "pattern": "Structured output",
+      "cacheable": true,
+      "inputs": [
+        {
+          "key": "sales",
+          "label": "Sales data",
+          "type": "file",
+          "required": true,
+          "extensions": [
+            ".csv"
+          ],
+          "maxFiles": 1,
+          "textInto": "csv"
+        }
+      ],
+      "nodes": [
+        {
+          "nodeId": "input",
+          "kind": "input",
+          "name": "sales.csv",
+          "tag": "Input",
+          "detail": "FileReadTool"
+        },
+        {
+          "nodeId": "data_analyst",
+          "kind": "step",
+          "name": "Data Analyst",
+          "tag": "Agent 1",
+          "detail": "output_pydantic stats"
+        },
+        {
+          "nodeId": "insight_writer",
+          "kind": "step",
+          "name": "Insight Writer",
+          "tag": "Agent 2",
+          "detail": "Top 3 findings"
+        },
+        {
+          "nodeId": "reviewer",
+          "kind": "step",
+          "name": "Reviewer",
+          "tag": "Agent 3",
+          "detail": "Checks every number"
+        },
+        {
+          "nodeId": "output",
+          "kind": "output",
+          "name": "report.md",
+          "tag": "Output",
+          "detail": "Saved by FileWriter"
+        }
+      ]
+    },
+    {
+      "id": "customer-support-flow",
+      "number": 5,
+      "title": "Customer Support Flow",
+      "type": "Flow",
+      "pattern": "Router",
+      "cacheable": true,
+      "inputs": [
+        {
+          "key": "ticket_text",
+          "label": "Support ticket",
+          "type": "text",
+          "required": true,
+          "minLength": 10,
+          "maxLength": 4000,
+          "multiline": true
+        }
+      ],
+      "nodes": [
+        {
+          "nodeId": "receive_ticket",
+          "kind": "input",
+          "name": "receive_ticket",
+          "tag": "@start()",
+          "detail": "Fills the ticket state"
+        },
+        {
+          "nodeId": "categorize_ticket",
+          "kind": "step",
+          "name": "categorize_ticket",
+          "tag": "@listen(receive_ticket)",
+          "detail": "Direct LLM call"
+        },
+        {
+          "nodeId": "route_by_category",
+          "kind": "router",
+          "name": "route_by_category",
+          "tag": "@router",
+          "detail": "Returns a label"
+        },
+        {
+          "nodeId": "handle_billing",
+          "kind": "step",
+          "name": "handle_billing",
+          "tag": "@listen(\"billing\")",
+          "detail": "priority = high"
+        },
+        {
+          "nodeId": "handle_access",
+          "kind": "step",
+          "name": "handle_access",
+          "tag": "@listen(\"account_access\")",
+          "detail": "priority = high"
+        },
+        {
+          "nodeId": "handle_other",
+          "kind": "dashed",
+          "name": "handle_other",
+          "tag": "@listen(\"other\")",
+          "detail": "technical, feature"
+        },
+        {
+          "nodeId": "or_",
+          "kind": "join",
+          "name": "or_"
+        },
+        {
+          "nodeId": "resolve_ticket",
+          "kind": "output",
+          "name": "resolve_ticket",
+          "tag": "@listen(or_)",
+          "detail": "Returns resolution"
+        }
+      ]
+    },
+    {
+      "id": "resume-screening-flow",
+      "number": 6,
+      "title": "Resume Screening Flow",
+      "type": "Flow",
+      "pattern": "Router",
+      "cacheable": true,
+      "inputs": [
+        {
+          "key": "job_description",
+          "label": "Job description",
+          "type": "text",
+          "required": true,
+          "minLength": 20,
+          "maxLength": 5000,
+          "multiline": true
+        },
+        {
+          "key": "resumes",
+          "label": "Resumes",
+          "type": "file",
+          "required": true,
+          "extensions": [
+            ".pdf",
+            ".txt"
+          ],
+          "maxFiles": 5,
+          "asText": true,
+          "hint": "The text of each file is extracted by the server. Scanned documents (images) cannot be read."
+        }
+      ],
+      "nodes": [
+        {
+          "nodeId": "load_resumes",
+          "kind": "input",
+          "name": "load_resumes",
+          "tag": "@start()",
+          "detail": "Reads each file"
+        },
+        {
+          "nodeId": "score_resume",
+          "kind": "step",
+          "name": "score_resume",
+          "tag": "@listen(load_resumes)",
+          "detail": "Direct LLM, 0 to 10"
+        },
+        {
+          "nodeId": "check_score",
+          "kind": "router",
+          "name": "check_score",
+          "tag": "@router",
+          "detail": "Score 7 or more?"
+        },
+        {
+          "nodeId": "summary_crew",
+          "kind": "crew",
+          "name": "Summary Crew",
+          "tag": "@listen(\"shortlist\")",
+          "detail": "Strengths and gaps"
+        },
+        {
+          "nodeId": "draft_rejection",
+          "kind": "step",
+          "name": "draft_rejection",
+          "tag": "@listen(\"reject\")",
+          "detail": "Polite email"
+        },
+        {
+          "nodeId": "or_",
+          "kind": "join",
+          "name": "or_"
+        },
+        {
+          "nodeId": "save_results",
+          "kind": "output",
+          "name": "save_results",
+          "tag": "@listen(or_)",
+          "detail": "results.csv"
+        }
+      ]
+    },
+    {
+      "id": "bug-triage-flow",
+      "number": 7,
+      "title": "Bug Triage Flow",
+      "type": "Flow + Crews",
+      "pattern": "Router",
+      "cacheable": true,
+      "inputs": [
+        {
+          "key": "title",
+          "label": "Issue title",
+          "type": "text",
+          "required": true,
+          "minLength": 3,
+          "maxLength": 200
+        },
+        {
+          "key": "body",
+          "label": "Issue description",
+          "type": "text",
+          "required": true,
+          "minLength": 3,
+          "maxLength": 8000,
+          "multiline": true
+        },
+        {
+          "key": "docs_url",
+          "label": "Documentation website",
+          "type": "url",
+          "required": false
+        }
+      ],
+      "nodes": [
+        {
+          "nodeId": "read_issue",
+          "kind": "input",
+          "name": "read_issue",
+          "tag": "@start()",
+          "detail": "Title and body"
+        },
+        {
+          "nodeId": "classify_issue",
+          "kind": "step",
+          "name": "classify_issue",
+          "tag": "@listen(read_issue)",
+          "detail": "Direct LLM call"
+        },
+        {
+          "nodeId": "route_type",
+          "kind": "router",
+          "name": "route_type",
+          "tag": "@router",
+          "detail": "bug, feature, question"
+        },
+        {
+          "nodeId": "bug_crew",
+          "kind": "crew",
+          "name": "Bug Crew",
+          "tag": "@listen(\"bug\")",
+          "detail": "Severity and steps"
+        },
+        {
+          "nodeId": "feature_crew",
+          "kind": "crew",
+          "name": "Feature Crew",
+          "tag": "@listen(\"feature\")",
+          "detail": "Draft a user story"
+        },
+        {
+          "nodeId": "answer_crew",
+          "kind": "crew",
+          "name": "Answer Crew",
+          "tag": "@listen(\"question\")",
+          "detail": "Reply from the docs"
+        },
+        {
+          "nodeId": "or_",
+          "kind": "join",
+          "name": "or_"
+        },
+        {
+          "nodeId": "post_reply",
+          "kind": "output",
+          "name": "post_reply",
+          "tag": "@listen(or_)",
+          "detail": "Label and comment"
+        }
+      ]
+    },
+    {
+      "id": "content-repurposing-flow",
+      "number": 8,
+      "title": "Content Repurposing Flow",
+      "type": "Flow + Crews",
+      "pattern": "and_",
+      "cacheable": true,
+      "inputs": [
+        {
+          "key": "article_url",
+          "label": "Article address",
+          "type": "url",
+          "required": false
+        },
+        {
+          "key": "article_text",
+          "label": "Article text",
+          "type": "text",
+          "required": false,
+          "minLength": 200,
+          "maxLength": 20000,
+          "multiline": true
+        },
+        {
+          "key": "article_file",
+          "label": "Article file",
+          "type": "file",
+          "required": false,
+          "extensions": [
+            ".txt"
+          ],
+          "maxFiles": 1,
+          "textInto": "article_text",
+          "hint": "The text of the file is used as the article. Provide an address, pasted text or a file, not more than one."
+        }
+      ],
+      "nodes": [
+        {
+          "nodeId": "load_article",
+          "kind": "input",
+          "name": "load_article",
+          "tag": "@start()",
+          "detail": "URL or file"
+        },
+        {
+          "nodeId": "extract_points",
+          "kind": "step",
+          "name": "extract_points",
+          "tag": "@listen(load_article)",
+          "detail": "Direct LLM call"
+        },
+        {
+          "nodeId": "linkedin_crew",
+          "kind": "crew",
+          "name": "LinkedIn Crew",
+          "tag": "@listen(extract_points)",
+          "detail": "Hook, 150 words"
+        },
+        {
+          "nodeId": "twitter_crew",
+          "kind": "crew",
+          "name": "Twitter Crew",
+          "tag": "@listen(extract_points)",
+          "detail": "6-tweet thread"
+        },
+        {
+          "nodeId": "newsletter_crew",
+          "kind": "crew",
+          "name": "Newsletter Crew",
+          "tag": "@listen(extract_points)",
+          "detail": "Intro and 3 bullets"
+        },
+        {
+          "nodeId": "and_",
+          "kind": "join",
+          "name": "and_"
+        },
+        {
+          "nodeId": "publish_pack",
+          "kind": "output",
+          "name": "publish_pack",
+          "tag": "@listen(and_)",
+          "detail": "3 files saved"
+        }
+      ],
+      "requireAnyOf": [
+        "article_url",
+        "article_text",
+        "article_file"
+      ]
+    },
+    {
+      "id": "lead-qualification-flow",
+      "number": 9,
+      "title": "Lead Qualification Flow",
+      "type": "Flow + Crews",
+      "pattern": "Router",
+      "cacheable": true,
+      "inputs": [
+        {
+          "key": "lead_name",
+          "label": "Lead name",
+          "type": "text",
+          "required": true,
+          "minLength": 2,
+          "maxLength": 120
+        },
+        {
+          "key": "company_name",
+          "label": "Company name",
+          "type": "text",
+          "required": true,
+          "minLength": 2,
+          "maxLength": 120
+        },
+        {
+          "key": "website_url",
+          "label": "Website address",
+          "type": "url",
+          "required": true
+        }
+      ],
+      "nodes": [
+        {
+          "nodeId": "capture_lead",
+          "kind": "input",
+          "name": "capture_lead",
+          "tag": "@start()",
+          "detail": "Name and website"
+        },
+        {
+          "nodeId": "enrich_crew",
+          "kind": "crew",
+          "name": "Enrich Crew",
+          "tag": "@listen(capture_lead)",
+          "detail": "Scrapes the website"
+        },
+        {
+          "nodeId": "score_lead",
+          "kind": "router",
+          "name": "score_lead",
+          "tag": "@router",
+          "detail": "hot, warm, cold"
+        },
+        {
+          "nodeId": "outreach_crew",
+          "kind": "crew",
+          "name": "Outreach Crew",
+          "tag": "@listen(\"hot\")",
+          "detail": "Personal email draft"
+        },
+        {
+          "nodeId": "add_to_nurture",
+          "kind": "step",
+          "name": "add_to_nurture",
+          "tag": "@listen(\"warm\")",
+          "detail": "Weekly tips list"
+        },
+        {
+          "nodeId": "archive_lead",
+          "kind": "dashed",
+          "name": "archive_lead",
+          "tag": "@listen(\"cold\")",
+          "detail": "Saved, no action"
+        },
+        {
+          "nodeId": "or_",
+          "kind": "join",
+          "name": "or_"
+        },
+        {
+          "nodeId": "log_lead",
+          "kind": "output",
+          "name": "log_lead",
+          "tag": "@listen(or_)",
+          "detail": "leads.csv"
+        }
+      ]
+    },
+    {
+      "id": "approval-report-flow",
+      "number": 10,
+      "title": "Approval Report Flow",
+      "type": "Flow + Crews",
+      "pattern": "Human feedback",
+      "cacheable": false,
+      "inputs": [
+        {
+          "key": "topic",
+          "label": "Topic",
+          "type": "text",
+          "required": true,
+          "minLength": 3,
+          "maxLength": 200
+        },
+        {
+          "key": "audience",
+          "label": "Audience",
+          "type": "text",
+          "required": true,
+          "minLength": 3,
+          "maxLength": 200
+        }
+      ],
+      "nodes": [
+        {
+          "nodeId": "collect_topic",
+          "kind": "input",
+          "name": "collect_topic",
+          "tag": "@start()",
+          "detail": "Topic and audience"
+        },
+        {
+          "nodeId": "research_crew",
+          "kind": "crew",
+          "name": "Research Crew",
+          "tag": "@listen(collect_topic)",
+          "detail": "3 agents, sources"
+        },
+        {
+          "nodeId": "writing_crew",
+          "kind": "crew",
+          "name": "Writing Crew",
+          "tag": "@listen(research)",
+          "detail": "Drafts the report"
+        },
+        {
+          "nodeId": "review_draft",
+          "kind": "dashed",
+          "name": "review_draft",
+          "tag": "@human_feedback",
+          "detail": "A person decides"
+        },
+        {
+          "nodeId": "check_decision",
+          "kind": "router",
+          "name": "check_decision",
+          "tag": "@router",
+          "detail": "approved or revise"
+        },
+        {
+          "nodeId": "publish_report",
+          "kind": "output",
+          "name": "publish_report",
+          "tag": "@listen(\"approved\")",
+          "detail": "Saves final.md"
+        },
+        {
+          "nodeId": "revision_crew",
+          "kind": "crew",
+          "name": "Revision Crew",
+          "tag": "@listen(\"revise\")",
+          "detail": "Then back to review"
+        }
+      ]
+    },
+    {
+      "id": "demo",
+      "number": 0,
+      "title": "Pipeline demonstration",
+      "type": "Crew",
+      "pattern": "Sequential",
+      "internal": true,
+      "cacheable": true,
+      "inputs": [
+        {
+          "key": "topic",
+          "label": "Topic",
+          "type": "text",
+          "required": true,
+          "minLength": 1,
+          "maxLength": 200
+        },
+        {
+          "key": "notes",
+          "label": "Notes",
+          "type": "file",
+          "required": false,
+          "extensions": [
+            ".txt"
+          ],
+          "maxFiles": 1
+        }
+      ],
+      "nodes": [
+        {
+          "nodeId": "topic",
+          "kind": "input",
+          "name": "topic"
+        },
+        {
+          "nodeId": "plan",
+          "kind": "step",
+          "name": "plan"
+        },
+        {
+          "nodeId": "research",
+          "kind": "step",
+          "name": "research"
+        },
+        {
+          "nodeId": "compose",
+          "kind": "step",
+          "name": "compose"
+        },
+        {
+          "nodeId": "demo_md",
+          "kind": "output",
+          "name": "demo.md"
+        }
+      ]
+    }
+  ]
+}

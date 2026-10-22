@@ -1,0 +1,12 @@
+{
+  "name": "crewai-projects-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "npm run test:contract && npm run test:server && npm run test:frontend && npm run test:agents",
+    "test:contract": "node --test \"contract/*.test.js\"",
+    "test:server": "npm --prefix server test",
+    "test:frontend": "npm --prefix frontend test",
+    "test:agents": "node scripts/run-pytest.mjs"
+  }
+}

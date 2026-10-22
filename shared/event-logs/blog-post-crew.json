@@ -1,0 +1,30 @@
+{
+  "projectId": "blog-post-crew",
+  "emitted": {
+    "editor": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "input": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "output": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "researcher": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "writer": [
+      "done",
+      "pending",
+      "running"
+    ]
+  }
+}

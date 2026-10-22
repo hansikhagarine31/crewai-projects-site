@@ -1,0 +1,48 @@
+{
+  "projectId": "customer-support-flow",
+  "emitted": {
+    "categorize_ticket": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "handle_access": [
+      "done",
+      "pending",
+      "running",
+      "skipped"
+    ],
+    "handle_billing": [
+      "done",
+      "pending",
+      "running",
+      "skipped"
+    ],
+    "handle_other": [
+      "done",
+      "pending",
+      "running",
+      "skipped"
+    ],
+    "or_": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "receive_ticket": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "resolve_ticket": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "route_by_category": [
+      "done",
+      "pending",
+      "running"
+    ]
+  }
+}

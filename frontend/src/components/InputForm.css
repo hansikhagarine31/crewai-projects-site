@@ -1,0 +1,163 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  border: 0;
+}
+
+.field__label {
+  padding: 0;
+  font-weight: 700;
+}
+
+.field__meta {
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.field__hint {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.field__error {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--red);
+}
+
+.field__error::before {
+  content: 'Error: ';
+}
+
+.input {
+  width: 100%;
+  padding: 9px 12px;
+  font: inherit;
+  color: var(--ink);
+  background: #fff;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  transition: border-color 0.2s;
+}
+
+.input:hover {
+  border-color: var(--muted);
+}
+
+.input:focus-visible {
+  border-color: var(--ink);
+}
+
+.input[aria-invalid='true'] {
+  border-color: var(--red);
+}
+
+.input--area {
+  min-height: 9em;
+  resize: vertical;
+}
+
+.urls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: none;
+}
+
+.urls li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.link-button {
+  padding: 2px 0;
+  font: inherit;
+  font-weight: 600;
+  color: var(--coral-d);
+  text-decoration: underline;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.link-button:hover {
+  color: var(--ink);
+}
+
+.file {
+  position: relative;
+}
+
+.file__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.file__button {
+  cursor: pointer;
+}
+
+.file__input:focus-visible + .file__button {
+  outline: 3px solid var(--coral-d);
+  outline-offset: 3px;
+}
+
+.file__list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  list-style: none;
+}
+
+.file__list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 12px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow-wrap: anywhere;
+}
+
+.form__error {
+  padding: 10px 14px;
+  font-weight: 600;
+  color: var(--red);
+  background: #fff;
+  border: 1.5px solid var(--red);
+  border-radius: 10px;
+}
+
+.form__unavailable {
+  padding: 10px 14px;
+  color: var(--ink2);
+  background: #fff;
+  border: 1.5px dashed var(--muted);
+  border-radius: 10px;
+}
+
+.form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+}
+
+.form__busy {
+  color: var(--muted);
+}

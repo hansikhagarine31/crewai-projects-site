@@ -1,0 +1,25 @@
+{
+  "projectId": "demo",
+  "emitted": {
+    "compose": [
+      "done",
+      "running"
+    ],
+    "demo_md": [
+      "done",
+      "running"
+    ],
+    "plan": [
+      "done",
+      "running"
+    ],
+    "research": [
+      "done",
+      "running"
+    ],
+    "topic": [
+      "done",
+      "running"
+    ]
+  }
+}

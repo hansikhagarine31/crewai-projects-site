@@ -1,0 +1,10 @@
+crewai[google-genai]==1.15.28
+crewai-tools==1.15.28
+ddgs==9.16.0
+fastapi==0.159.1
+pandas==3.0.6
+pydantic==2.12.5
+pypdf==6.21.2
+python-dotenv==1.2.4
+uvicorn==0.54.0
+beautifulsoup4==4.15.0

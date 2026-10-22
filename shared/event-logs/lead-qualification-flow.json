@@ -1,0 +1,48 @@
+{
+  "projectId": "lead-qualification-flow",
+  "emitted": {
+    "add_to_nurture": [
+      "done",
+      "pending",
+      "running",
+      "skipped"
+    ],
+    "archive_lead": [
+      "done",
+      "pending",
+      "running",
+      "skipped"
+    ],
+    "capture_lead": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "enrich_crew": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "log_lead": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "or_": [
+      "done",
+      "pending",
+      "running"
+    ],
+    "outreach_crew": [
+      "done",
+      "pending",
+      "running",
+      "skipped"
+    ],
+    "score_lead": [
+      "done",
+      "pending",
+      "running"
+    ]
+  }
+}

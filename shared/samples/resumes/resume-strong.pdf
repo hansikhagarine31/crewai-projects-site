@@ -1,0 +1,32 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 842] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 955 >>
+stream
+BT /F1 11 Tf 50 780 Td 14 TL (Alex Morgan \(made-up sample resume for testing\)) Tj T* (Female, aged 41, British national, photo attached) Tj T* () Tj T* (Summary) Tj T* (Data analyst with six years of experience in finance reporting.) Tj T* () Tj T* (Experience) Tj T* (Senior Data Analyst, Northfield Retail \(2021 to present\)) Tj T* (- Wrote SQL queries against a 40-table reporting database to produce weekly sales and margin reports.) Tj T* (- Built and maintained 12 dashboards used by the finance team.) Tj T* (- Automated the monthly close report with Python, reducing manual work from two days to half a day.) Tj T* (- Presented findings to non-technical managers every month.) Tj T* () Tj T* (Data Analyst, Brightwater Insurance \(2018 to 2021\)) Tj T* (- Analysed claims data and prepared quarterly summaries for the finance director.) Tj T* () Tj T* (Skills) Tj T* (SQL, Python, Excel, dashboard design, financial reporting) Tj T* () Tj T* ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000241 00000 n 
+0000001247 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+1317
+%%EOF

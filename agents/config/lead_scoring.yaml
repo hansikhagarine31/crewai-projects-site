@@ -1,0 +1,64 @@
+# Lead scoring: the criteria, their weights and the thresholds. Edit this file; no code change is needed.
+# It is read at the start of every run, so a change applies to the next run without restarting the service.
+#
+# HOW A LEAD IS SCORED
+#   1. A language model assesses each criterion below, one by one, and answers with exactly one of:
+#        yes      the website clearly shows it
+#        partial  the website partly or weakly shows it
+#        no       the website shows the opposite, or shows that it does not apply
+#        unknown  the website does not say (this includes pages that could not be read)
+#      A "yes" or "partial" must come with a short exact quote from a page that was read. If the quote cannot be
+#      found on that page, the program changes the answer to "unknown". The model never decides the label.
+#   2. The program turns each answer into points: weight x the factor for that answer (see "answers").
+#   3. The score is the points earned as a whole-number percentage of the total weight (0 to 100).
+#   4. The label is chosen by the thresholds below. This is plain arithmetic in code.
+#
+# Weights are positive whole numbers; they need not add up to 100 (the score is a percentage of their total).
+
+version: 1
+
+# What the sender offers, used only to personalise the email draft for a "hot" lead. Replace the examples.
+# The email draft is never sent anywhere; it is shown for a person to review.
+offer:
+  description: "a reporting and analytics service for finance teams (example text: replace it with your own)"
+  sender_name: "[Your name]"
+  sender_company: "[Your company]"
+
+# Score needed for each label. A score at or above "hot" is hot; at or above "warm" is warm; anything lower is cold.
+thresholds:
+  hot: 70
+  warm: 40
+
+# Points for each answer, as a share of the criterion's weight.
+answers:
+  yes: 1.0
+  partial: 0.5
+  no: 0.0
+  unknown: 0.0
+
+# The criteria. "question" is asked of the model; "guidance" says what counts as yes, partial and no.
+criteria:
+  - id: target_industry
+    weight: 30
+    question: "Does the company operate in one of our target industries: software, financial services or professional services?"
+    guidance: "yes: its main business is in one of them. partial: it serves one of them, or is in a closely related field. no: its main business is clearly elsewhere."
+
+  - id: company_size
+    weight: 20
+    question: "Does the company appear to have between 50 and 1,000 employees?"
+    guidance: "Use stated facts only: a team-size figure, a number of offices, a careers page with many roles. yes: the evidence fits 50 to 1,000. partial: the evidence suggests it but is indirect. no: the evidence shows it is much smaller or larger. Do not guess a size from the look of the site."
+
+  - id: growth_signals
+    weight: 20
+    question: "Does the website show signs that the company is growing: hiring, new funding, new products or offices, or expansion?"
+    guidance: "yes: a clear, specific sign, such as open roles or a stated funding round. partial: a general statement of growth without detail. no: nothing of the kind, or signs of decline."
+
+  - id: relevant_need
+    weight: 20
+    question: "Does the website suggest that the company has a need that our offer addresses, such as reporting, analytics or financial planning?"
+    guidance: "yes: it states or clearly implies such a need or activity. partial: a related need is implied. no: nothing suggests it."
+
+  - id: target_region
+    weight: 10
+    question: "Does the company operate in our target regions: the United Kingdom, Ireland or the European Union?"
+    guidance: "yes: it states an office or customers there. partial: it works internationally without naming regions. no: it works only elsewhere."

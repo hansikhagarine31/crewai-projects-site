@@ -1,0 +1,26 @@
+/* Tokens taken from design/reference.html; --red and --coral-tint are additions for run states. */
+:root {
+  color-scheme: light;
+
+  --ink: #1a1a1a;
+  --ink2: #3a3a3a;
+  --muted: #5e5e5e; /* darker than the reference (#7a7a7a), which has a contrast ratio below 4.5:1 on white */
+  --coral: #ff5a50;
+  --coral-d: #c93a31;
+  --coral-l: #ffb4ae;
+  --coral-text: #b5342b; /* coral text on white and on --coral-tint with a contrast ratio above 4.5:1 */
+  --coral-tint: #ffeceb;
+  --tint: #f6f6f7;
+  --line: #e4e4e7;
+  --red: #b3261e;
+
+  --mono: ui-monospace, 'Courier New', Consolas, monospace;
+  --sans: Calibri, 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --gutter: clamp(20px, 6vw, 80px);
+  --max-width: 1160px;
+
+  /* Diagram breakpoint: below this width the diagram becomes a vertical list. */
+  --bp-list: 820px;
+}
