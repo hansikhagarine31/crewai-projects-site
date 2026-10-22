@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { ApiError, cancelRun, getResult, getReview, startRun, submitDecision, uploadFile } from '../lib/api.js';
+import { ApiError, cancelRun, getHealth, getResult, getReview, startRun, submitDecision, uploadFile } from '../lib/api.js';
 import { buildRequest } from '../lib/validateInputs.js';
 import {
   cancelledNotice,
@@ -12,6 +12,10 @@ import {
 } from '../lib/notices.js';
 import { clearRunId, loadRunId, saveRunId } from '../lib/storage.js';
 import { useRunEvents } from './useRunEvents.js';
+
+// Free hosts stop a service that receives no request for 15 minutes, which would delete a draft that waits for a decision.
+// While a draft waits, the page therefore makes a small request to the server (which asks the agents service) at this interval.
+export const KEEP_AWAKE_MS = 4 * 60 * 1000;
 
 const endNotice = (status, error) =>
   status === 'cancelled' ? cancelledNotice() : status === 'expired' ? reviewExpiredNotice(error) : failedRunNotice(error);
@@ -112,6 +116,14 @@ export function useProjectRun(project) {
       // 'not-waiting' means the run has already moved on; the stream will say so.
     });
   }, [phase, waitingSeq, runId]);
+
+  useEffect(() => {
+    if (phase !== 'waiting') return undefined;
+    const timer = setInterval(() => {
+      getHealth();
+    }, KEEP_AWAKE_MS);
+    return () => clearInterval(timer);
+  }, [phase]);
 
   // Another tab decided, so the draft is no longer waiting here.
   useEffect(() => {

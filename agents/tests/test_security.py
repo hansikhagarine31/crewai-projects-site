@@ -236,3 +236,73 @@ class TestRedirects:
         pages = {"https://a.example/": first, "https://a.example/two": second}
         self.final(pages, "https://a.example/")
         assert first.closed and second.closed
+
+
+class TestEveryRouteRequiresTheSecret:
+    """Walks the routes that are registered, so a route added later is covered without a change here."""
+
+    @staticmethod
+    def _routes():
+        from starlette.routing import Mount
+
+        from app.main import app
+
+        found = []
+
+        def walk(routes):
+            for route in routes:
+                if isinstance(route, Mount):  # a mounted application would need its own check
+                    raise AssertionError(f"Mounted application at {route.path} is not covered by the test.")
+                if hasattr(route, "original_router"):  # an included router
+                    walk(route.original_router.routes)
+                    continue
+                path = getattr(route, "path", None)
+                if path:
+                    for method in getattr(route, "methods", None) or {"GET"}:
+                        if method not in ("HEAD", "OPTIONS"):
+                            found.append((method, path))
+
+        walk(app.routes)
+        return found
+
+    def test_every_route_but_health_refuses_a_request_without_the_secret(self, monkeypatch):
+        from fastapi.testclient import TestClient
+
+        from app import config
+        from app.main import app
+
+        monkeypatch.setattr(config, "AGENT_SHARED_SECRET", "a-secret-for-the-test")
+        client = TestClient(app, raise_server_exceptions=False)
+        routes = self._routes()
+        assert ("POST", "/run/{project_id}") in routes and ("POST", "/resume/{run_id}") in routes
+        for method, path in routes:
+            url = path.replace("{project_id}", "demo").replace("{run_id}", "0" * 8 + "-0000-0000-0000-" + "0" * 12)
+            without = client.request(method, url)
+            wrong = client.request(method, url, headers={"x-agent-secret": "wrong"})
+            if path == "/health":
+                assert without.status_code == 200
+            else:
+                assert without.status_code == 401, f"{method} {path} answered {without.status_code} without the secret"
+                assert wrong.status_code == 401, f"{method} {path} answered {wrong.status_code} with a wrong secret"
+
+    def test_the_interactive_documentation_is_not_served(self, monkeypatch):
+        from fastapi.testclient import TestClient
+
+        from app import config
+        from app.main import app
+
+        monkeypatch.setattr(config, "AGENT_SHARED_SECRET", "a-secret-for-the-test")
+        client = TestClient(app, raise_server_exceptions=False)
+        for path in ("/docs", "/redoc", "/openapi.json"):
+            assert client.get(path, headers={"x-agent-secret": "a-secret-for-the-test"}).status_code == 404
+
+    def test_a_service_without_a_configured_secret_refuses_everything_but_health(self, monkeypatch):
+        from fastapi.testclient import TestClient
+
+        from app import config
+        from app.main import app
+
+        monkeypatch.setattr(config, "AGENT_SHARED_SECRET", "")
+        client = TestClient(app, raise_server_exceptions=False)
+        assert client.get("/health").status_code == 200
+        assert client.post("/run/demo", json={}, headers={"x-agent-secret": ""}).status_code == 503

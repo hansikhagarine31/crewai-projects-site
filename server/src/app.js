@@ -42,6 +42,9 @@ export function createApp({
   app.use(helmet());
   app.use(cors({ origin: config.corsOrigin, allowedHeaders: ['content-type', 'last-event-id'], exposedHeaders: ['Retry-After'] }));
 
+  // For the host's health check: answers without calling the agents service, which may be asleep.
+  app.get('/api/live', (_req, res) => res.json({ server: 'ok' }));
+
   app.get('/api/health', async (_req, res) => {
     try {
       const response = await fetch(`${config.agentsUrl}/health`, {
@@ -60,7 +63,8 @@ export function createApp({
       return res.status(503).json({
         server: 'ok',
         agents: 'unreachable',
-        error: `Agents service at ${config.agentsUrl} could not be reached (${err.cause?.code ?? err.name}).`,
+        // The address of the agents service is not given to a visitor.
+        error: `The agents service could not be reached (${err.cause?.code ?? err.name}).`,
       });
     }
   });

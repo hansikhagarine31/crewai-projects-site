@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { apiUrl } from '../lib/apiBase.js';
 import { formatBytes } from '../lib/validateInputs.js';
 import SafeMarkdown from './SafeMarkdown.jsx';
 import './ResultViewer.css';
@@ -91,7 +92,7 @@ export default function ResultViewer({ result, projectId }) {
           <ul>
             {result.files.map((file) => (
               <li key={file.name}>
-                <a href={file.url} download={file.name}>
+                <a href={apiUrl(file.url)} download={file.name}>
                   {file.name}
                 </a>
                 <span className="field__meta">
@@ -103,7 +104,7 @@ export default function ResultViewer({ result, projectId }) {
           </ul>
           {result.zipUrl && (
             <p className="result__zip">
-              <a href={result.zipUrl} download>
+              <a href={apiUrl(result.zipUrl)} download>
                 Download all files (zip)
               </a>
             </p>

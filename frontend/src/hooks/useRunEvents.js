@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { apiUrl } from '../lib/apiBase.js';
 import { applyEnd, applyEvent, initialRunState } from '../lib/runState.js';
 
 // The browser reconnects an EventSource by itself (and sends Last-Event-ID). This many
@@ -41,7 +42,7 @@ export function useRunEvents(runId) {
     // After a manual retry the browser has no Last-Event-ID to send, so pass it in the query.
     const forThisRun = (current) => (current.forRun === runId ? current : { ...initialRunState(), forRun: runId });
     const query = lastSeq.current > 0 ? `?lastEventId=${lastSeq.current}` : '';
-    const source = new EventSource(`/api/runs/${encodeURIComponent(runId)}/events${query}`);
+    const source = new EventSource(apiUrl(`/api/runs/${encodeURIComponent(runId)}/events${query}`));
     let failures = 0;
     let finished = false;
     let lastMessage = Date.now();

@@ -45,8 +45,8 @@ services:
       dockerfile: server/Dockerfile
     environment:
       AGENT_SHARED_SECRET: ${AGENT_SHARED_SECRET:?Set AGENT_SHARED_SECRET in .env}
-      AGENTS_URL: http://agents:8001
-      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:5173}
+      AGENT_BASE_URL: http://agents:8001
+      ALLOWED_ORIGIN: ${ALLOWED_ORIGIN:-http://localhost:5173}
       PORT: "8000"
     ports:
       - "127.0.0.1:8000:8000"

@@ -14,7 +14,8 @@ GEMINI_MODEL = os.getenv("GEMINI_MODEL", DEFAULT_GEMINI_MODEL)
 AGENT_SHARED_SECRET = os.getenv("AGENT_SHARED_SECRET", "")
 
 HOST = os.getenv("AGENT_HOST", "127.0.0.1")
-PORT = int(os.getenv("AGENT_PORT", "8001"))
+# Hosts such as Render give the port to listen on in PORT.
+PORT = int(os.getenv("AGENT_PORT") or os.getenv("PORT") or "8001")
 
 # Limits. The server applies the same total output limit.
 LLM_MAX_OUTPUT_TOKENS = int(os.getenv("LLM_MAX_OUTPUT_TOKENS", "8192"))

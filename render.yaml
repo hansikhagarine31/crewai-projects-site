@@ -1,0 +1,45 @@
+# Render Blueprint for the two backend services. The frontend is deployed on Vercel (see DEPLOY.md).
+#
+# Both services use the free plan, which has these consequences (Render documentation, "Free web services"):
+#   - a service that receives no request for 15 minutes is stopped, and starts again on the next request
+#     (about one minute);
+#   - the file system is lost on every restart, redeploy and stop;
+#   - a free web service cannot receive private-network traffic, so the agents service is public and is protected
+#     by the shared secret alone.
+# Values marked "sync: false" are asked for once, when the Blueprint is created. Never put them in this file.
+services:
+  - type: web
+    name: crewai-agents
+    runtime: docker
+    plan: free
+    region: frankfurt
+    dockerfilePath: ./agents/Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: AGENT_SHARED_SECRET # the same value as in crewai-server
+        sync: false
+
+  - type: web
+    name: crewai-server
+    runtime: docker
+    plan: free
+    region: frankfurt # keep the same region as crewai-agents
+    dockerfilePath: ./server/Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/live
+    autoDeployTrigger: commit
+    envVars:
+      - key: AGENT_BASE_URL # the public address of crewai-agents, for example https://crewai-agents.onrender.com
+        sync: false
+      - key: AGENT_SHARED_SECRET # the same value as in crewai-agents
+        sync: false
+      - key: ALLOWED_ORIGIN # the address of the site on Vercel, without a trailing slash
+        sync: false
+      - key: RATE_LIMIT # runs that one address may start per hour
+        value: "5"
+      - key: TRUST_PROXY # the number of proxies in front of the server; see DEPLOY.md, step 5
+        value: "1"

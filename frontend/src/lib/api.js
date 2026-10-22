@@ -1,3 +1,5 @@
+import { apiUrl } from './apiBase.js';
+
 export class ApiError extends Error {
   /**
    * @param {number} status  HTTP status, or 0 when the server could not be reached.
@@ -23,7 +25,7 @@ export function parseRetryAfter(value, now = Date.now()) {
 }
 
 async function request(path, options) {
-  const response = await fetch(path, options);
+  const response = await fetch(apiUrl(path), options);
   let body = null;
   try {
     body = await response.json();
@@ -82,7 +84,7 @@ export async function uploadFile(runId, field, file) {
 /** Best effort: releases a run that will not be completed. Never throws. */
 export async function cancelRun(runId) {
   try {
-    await fetch(`/api/runs/${encodeURIComponent(runId)}/cancel`, { method: 'POST' });
+    await fetch(apiUrl(`/api/runs/${encodeURIComponent(runId)}/cancel`), { method: 'POST' });
   } catch {
     // The run expires by itself.
   }

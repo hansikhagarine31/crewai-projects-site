@@ -16,6 +16,7 @@ COPY shared/projects.json /srv/shared/projects.json
 RUN useradd --create-home --uid 10001 agents && mkdir -p /var/lib/agents/state && chown agents /var/lib/agents/state
 USER agents
 
-ENV AGENT_HOST=0.0.0.0 AGENT_PORT=8001 REVIEW_STATE_DIR=/var/lib/agents/state
+# The port is AGENT_PORT, or PORT when the host sets it (Render does), or 8001.
+ENV AGENT_HOST=0.0.0.0 REVIEW_STATE_DIR=/var/lib/agents/state
 EXPOSE 8001
 CMD ["python", "-m", "app.main"]

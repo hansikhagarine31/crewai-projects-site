@@ -72,3 +72,10 @@ restart. Set `LEAD_SCORING_CONFIG` to use a different file.
 - `npm test` at the repository root runs the contract test, then the server, frontend and agents suites.
 - The contract test (`contract/`) compares the node ids in `shared/projects.json`, `frontend/src/data/projects.js` and the events the Python runners emit. The emitted events are recorded in `shared/event-logs/` while the agents tests run; rewrite them with `RECORD_EVENTS=1` set when running the whole agents suite (`cd agents && RECORD_EVENTS=1 .venv/Scripts/python -m pytest`) after changing a project's nodes.
 - `docker compose up --build` runs `server/` and `agents/` (see the comments in `docker-compose.yml`). The agents service publishes no port and shares only an internal network with the server.
+- `npm run check:secrets` searches the repository, and `frontend/dist` when it exists, for key patterns; it is the first step of `npm test`.
+
+## Deployment
+
+`DEPLOY.md` gives the steps, in order, for publishing the frontend on Vercel and the server and agents service on Render
+(`vercel.json`, `render.yaml`), with the environment variables, what is lost when a free service restarts, how to verify
+event streaming (`node scripts/check-stream.mjs <server address>`) and the security review.
