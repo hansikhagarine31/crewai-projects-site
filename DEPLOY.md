@@ -74,7 +74,7 @@ Accounts: GitHub (the repository is at `https://github.com/hansikhagarine31/crew
 
 1. In Google AI Studio, create a Gemini API key. Do not paste it into any chat, issue or file in the repository.
 2. Check the model and the limits that apply to you:
-   - The model name is a single constant, `DEFAULT_GEMINI_MODEL` in `agents/app/config.py`, currently `gemini-3.5-flash-lite`. Google's model list shows this identifier with the status "Stable". The page does not say whether it is available on the free tier. Open `https://aistudio.google.com/rate-limit` to see the limits that apply to your project; limits are applied per project, not per key, and the daily quota resets at midnight Pacific time.
+   - The model name is a single constant, `DEFAULT_GEMINI_MODEL` in `agents/app/config.py`, currently `gemini-3.1-flash-lite`. Google's model list shows this identifier with the status "Stable". The page does not say whether it is available on the free tier. Open `https://aistudio.google.com/rate-limit` to see the limits that apply to your project; limits are applied per project, not per key, and the daily quota resets at midnight Pacific time.
    - To change the model without editing the code, set `GEMINI_MODEL` on the agents service.
 3. Generate the shared secret. Run this once and keep the output for step 4 and step 5:
 
@@ -238,7 +238,7 @@ Residual risks:
 ## 12. What has not been verified
 
 - The Docker images have never been built, and neither has the Blueprint been applied: Docker is not installed on the machine where the work was done, and no Render or Vercel account was used. The layout the Dockerfiles create was simulated from a copy of the directories, and both services were run from it. The first deployment may expose an error in a Dockerfile or in `render.yaml`; the Render build log will show it.
-- No run with a real Gemini key has been made. All model behaviour in the tests uses scripted stand-ins. Whether `gemini-3.5-flash-lite` is available on the free tier, and how many runs the free quota allows, must be read from Google AI Studio.
+- No run with a real Gemini key has been made. All model behaviour in the tests uses scripted stand-ins. Whether `gemini-3.1-flash-lite` is available on the free tier, and how many runs the free quota allows, must be read from Google AI Studio.
 - The memory and speed of the agents service on a free instance (512 MB, 0.1 CPU) were not measured on Render.
 - Whether Render's proxy buffers the event stream (section 8), and the number of proxies in front of the server (section 5), were not measured.
 - Whether an open event stream keeps a free Render service awake is not established.

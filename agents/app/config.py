@@ -7,7 +7,7 @@ load_dotenv()
 
 # Single definition of the Gemini model name. Verify against the current
 # Google AI Studio documentation before changing; override with GEMINI_MODEL.
-DEFAULT_GEMINI_MODEL = "gemini-3.5-flash-lite"
+DEFAULT_GEMINI_MODEL = "gemini-3.1-flash-lite"
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", DEFAULT_GEMINI_MODEL)
