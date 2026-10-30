@@ -39,6 +39,10 @@ export default function Home() {
         <ConnectionStatus />
         <p className="site-footer__link">
           <Link to="/projects/demo">Pipeline demonstration</Link>
+          <span style={{ margin: '0 8px', color: 'var(--line)' }}>•</span>
+          <Link to="/submission" style={{ color: 'var(--coral-text)', fontWeight: 600 }}>
+            Submission Guide & Checklist
+          </Link>
         </p>
       </footer>
     </main>

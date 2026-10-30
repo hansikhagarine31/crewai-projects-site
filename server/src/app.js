@@ -8,6 +8,7 @@ import { errorHandler, notFound } from './middleware/errors.js';
 import { getProject, listProjects } from './projects.js';
 import { createRunRegistry } from './runs.js';
 import { createRunService } from './runService.js';
+import { agentRoutes } from './routes/agents.js';
 import { projectRoutes } from './routes/projects.js';
 import { runRoutes } from './routes/runs.js';
 
@@ -41,11 +42,14 @@ export function createApp({
 
   app.use(helmet());
   app.use(cors({ origin: config.corsOrigin, allowedHeaders: ['content-type', 'last-event-id'], exposedHeaders: ['Retry-After'] }));
+  app.use(express.json({ limit: config.jsonLimit }));
 
   // For the host's health check: answers without calling the agents service, which may be asleep.
-  app.get('/api/live', (_req, res) => res.json({ server: 'ok' }));
+  const handleLive = (_req, res) => res.json({ server: 'ok' });
+  app.get('/api/live', handleLive);
+  app.get('/live', handleLive);
 
-  app.get('/api/health', async (_req, res) => {
+  const handleHealth = async (_req, res) => {
     try {
       const response = await fetch(`${config.agentsUrl}/health`, {
         headers: { 'x-agent-secret': config.agentSecret },
@@ -67,11 +71,18 @@ export function createApp({
         error: `The agents service could not be reached (${err.cause?.code ?? err.name}).`,
       });
     }
-  });
+  };
+  app.get('/api/health', handleHealth);
+  app.get('/health', handleHealth);
 
   const service = createRunService({ registry, cache, config, getProject: projects.get, startRun, resumeRun, log });
 
-  app.use('/api', apiLimiter(), express.json({ limit: config.jsonLimit }));
+  const agents = agentRoutes({ config, projects, service, registry, cache, startRun, resumeRun, log });
+  // Assignment required endpoints: /agent1 .. /agent10 (GET redirect to frontend, POST returns {"output": "..."})
+  app.use(agents);
+  app.use('/api', agents);
+
+  app.use('/api', apiLimiter());
   app.use('/api', projectRoutes({ config, projects, service, validateUrl }));
   app.use('/api', runRoutes({ config, registry, projects, service }));
 

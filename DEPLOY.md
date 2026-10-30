@@ -243,3 +243,25 @@ Residual risks:
 - Whether Render's proxy buffers the event stream (section 8), and the number of proxies in front of the server (section 5), were not measured.
 - Whether an open event stream keeps a free Render service awake is not established.
 - The cross-origin behaviour (health, event stream, run, download) was verified in Chrome between two local origins with a production build, not between Vercel and Render.
+
+## 13. Assignment Submission (CrewAI + Node.js Backend)
+
+To submit this project for evaluation:
+
+1. **Backend Endpoints:**
+   The Node.js Express server exposes `/agent1` through `/agent10`:
+   - `POST /agent1` .. `POST /agent10`: Receives `{ "input": "..." }` and returns `{ "output": "..." }` (HTTP 200).
+   - `GET /agent1` .. `GET /agent10`: Automatically redirects (HTTP 302) to the corresponding project interactive interface (e.g. `/projects/blog-post-crew`).
+   - Also available under `/api/agent1` .. `/api/agent10`.
+
+2. **Submission File (`submission.txt`):**
+   - Create a plain text file named `submission.txt` (see `submission.txt.example`).
+   - Line 1: Your deployed backend URL only (e.g. `https://crewai-server.onrender.com`), without any leading or trailing spaces or trailing slash.
+   - Line 2: Your CrewAI GitHub repository URL (e.g. `https://github.com/your-username/crewai-projects-site`).
+   - Do NOT submit the frontend URL.
+
+3. **Pre-Submission Checklist:**
+   - [ ] Test each route `/agent1` to `/agent10` in Postman using POST with body `{"input": "hello"}` and confirm it returns `{"output": "..."}`.
+   - [ ] Confirm GET `/agent1` redirects in a web browser.
+   - [ ] Confirm GitHub repository is accessible.
+

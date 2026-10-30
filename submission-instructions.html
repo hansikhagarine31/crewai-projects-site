@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to Submit Assignments — CrewAI (Node.js Backend)</title>
+<style>
+  :root {
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --accent: #FF5A50;
+    --accent-dark: #C93A31;
+    --accent-blue: #0284c7;
+    --text: #1e293b;
+    --muted: #64748b;
+    --warn: #d97706;
+    --ok: #059669;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: radial-gradient(circle at top left, #fee2e2, var(--bg) 60%) fixed;
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 40px 16px 80px;
+  }
+  main { width: 100%; max-width: 880px; }
+
+  h1 {
+    font-size: clamp(1.9rem, 5vw, 2.9rem);
+    margin-bottom: 8px;
+    background: linear-gradient(90deg, var(--accent-dark), var(--accent));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  h2 {
+    font-size: 1.4rem;
+    margin: 40px 0 16px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .subtitle { color: var(--muted); margin-bottom: 28px; font-size: 1.05rem; }
+
+  .fade {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade.visible { opacity: 1; transform: none; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid var(--accent);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
+  }
+  .card h3 { margin-bottom: 8px; color: var(--accent-dark); font-size: 1.05rem; }
+  .card p, .card li { line-height: 1.6; }
+  .card ul { padding-left: 20px; }
+  .card.warn { border-left-color: var(--warn); }
+  .card.warn h3 { color: var(--warn); }
+  .card.blue { border-left-color: var(--accent-blue); }
+  .card.blue h3 { color: var(--accent-blue); }
+  .card.repo { border-left-color: var(--ok); }
+  .card.repo h3 { color: var(--ok); }
+
+  code, pre {
+    font-family: var(--mono);
+    background: #f1f5f9;
+    border-radius: 8px;
+  }
+  code { padding: 2px 6px; font-size: 0.9em; color: #b91c1c; font-weight: 600; }
+  pre {
+    padding: 14px 16px;
+    margin-top: 10px;
+    overflow-x: auto;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #0f172a;
+    border: 1px solid #e2e8f0;
+  }
+
+  .step-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--accent); color: #ffffff; font-weight: 700; font-size: 0.85rem;
+    margin-right: 8px;
+  }
+  .step-num.blue { background: var(--accent-blue); }
+  .step-num.green { background: var(--ok); }
+
+  .mapping-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 0.92rem;
+  }
+  .mapping-table th, .mapping-table td {
+    padding: 10px 14px;
+    border: 1px solid #e2e8f0;
+    text-align: left;
+  }
+  .mapping-table th { background: #f8fafc; font-weight: 600; }
+  .mapping-table tr:nth-child(even) td { background: #fcfdfe; }
+
+  .files { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .files span {
+    background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0;
+    padding: 4px 12px; border-radius: 999px; font-family: var(--mono); font-size: 0.85rem;
+  }
+
+  .eval {
+    background: linear-gradient(90deg, #fee2e2, #fef3c7);
+    border: 1px solid #fecaca;
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    line-height: 1.6;
+  }
+
+  .checklist {
+    list-style: none;
+    padding-left: 0 !important;
+  }
+  .checklist li {
+    position: relative;
+    padding-left: 32px;
+    margin-bottom: 12px;
+  }
+  .checklist li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 2px;
+    width: 22px;
+    height: 22px;
+    background: #059669;
+    color: white;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <h1 class="fade">How to Submit Assignments</h1>
+  <p class="subtitle fade">Guidelines for submitting your 10 CrewAI projects using a Node.js Express backend.</p>
+
+  <!-- NODE.JS BACKEND -->
+  <h2 class="fade">Part 1: Node.js Backend Service</h2>
+
+  <div class="card fade">
+    <h3><span class="step-num">1</span>Create Node.js routes /agent1 through /agent10</h3>
+    <p>The backend routes <code>/agent1</code>, <code>/agent2</code> … <code>/agent10</code> match the ten CrewAI projects.</p>
+    <table class="mapping-table">
+      <thead>
+        <tr>
+          <th>Route</th>
+          <th>Project Name</th>
+          <th>CrewAI Pattern</th>
+          <th>GET Redirect Target</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>/agent1</code></td><td>Blog Post Crew</td><td>Sequential Crew</td><td><code>/projects/blog-post-crew</code></td></tr>
+        <tr><td><code>/agent2</code></td><td>Competitor Analysis Crew</td><td>Hierarchical Crew</td><td><code>/projects/competitor-analysis-crew</code></td></tr>
+        <tr><td><code>/agent3</code></td><td>Meeting Notes Crew</td><td>Parallel Tasks</td><td><code>/projects/meeting-notes-crew</code></td></tr>
+        <tr><td><code>/agent4</code></td><td>Data Report Crew</td><td>Structured Output</td><td><code>/projects/data-report-crew</code></td></tr>
+        <tr><td><code>/agent5</code></td><td>Customer Support Flow</td><td>Router Flow</td><td><code>/projects/customer-support-flow</code></td></tr>
+        <tr><td><code>/agent6</code></td><td>Resume Screening Flow</td><td>Router Flow</td><td><code>/projects/resume-screening-flow</code></td></tr>
+        <tr><td><code>/agent7</code></td><td>Bug Triage Flow</td><td>Router + Crews</td><td><code>/projects/bug-triage-flow</code></td></tr>
+        <tr><td><code>/agent8</code></td><td>Content Repurposing Flow</td><td>and_ Join Flow</td><td><code>/projects/content-repurposing-flow</code></td></tr>
+        <tr><td><code>/agent9</code></td><td>Lead Qualification Flow</td><td>Router + Crews</td><td><code>/projects/lead-qualification-flow</code></td></tr>
+        <tr><td><code>/agent10</code></td><td>Approval Report Flow</td><td>Human Feedback Flow</td><td><code>/projects/approval-report-flow</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card fade">
+    <h3><span class="step-num">2</span>Use POST routes with a JSON body</h3>
+    <p>Every route must accept a <strong>POST</strong> request. The input is text only, sent as JSON:</p>
+    <pre>{
+  "input": "......"
+}</pre>
+  </div>
+
+  <div class="card fade">
+    <h3><span class="step-num">3</span>Return the answer in this JSON format</h3>
+    <p>The endpoint returns an HTTP 200 response with JSON in this exact shape:</p>
+    <pre>{
+  "output": "....."
+}</pre>
+  </div>
+
+  <div class="card blue fade">
+    <h3><span class="step-num blue">4</span>GET requests redirect to the project</h3>
+    <p>When an evaluator opens <code>/agent1</code> … <code>/agent10</code> in a web browser (HTTP GET), the server redirects (HTTP 302) directly to the corresponding interactive project interface (e.g. <code>/projects/blog-post-crew</code>).</p>
+  </div>
+
+  <div class="card fade">
+    <h3><span class="step-num">5</span>Test in Postman</h3>
+    <p>Test every route <code>/agent1</code> through <code>/agent10</code> in Postman <strong>before</strong> submitting.</p>
+  </div>
+
+  <!-- GITHUB REPOS -->
+  <h2 class="fade">Part 2: GitHub Repository</h2>
+
+  <div class="card repo fade">
+    <h3><span class="step-num green">6</span>Create a single CrewAI GitHub repo</h3>
+    <p>Your CrewAI multi-agent application lives in its dedicated repository (no AutoGen repository required).</p>
+    <p style="margin-top: 8px;">The repository contains the deployed backend service (Node.js/Express), the CrewAI agents service (Python/CrewAI), and the React frontend.</p>
+  </div>
+
+  <div class="eval fade">
+    <strong>Evaluation:</strong> Assignments will be evaluated based on <strong>both the GitHub link and the deployed backend link</strong>.
+  </div>
+
+  <!-- SUBMISSION -->
+  <h2 class="fade">Part 3: Submission</h2>
+
+  <div class="card warn fade">
+    <h3>Submission rules</h3>
+    <ul>
+      <li>Submit a <code>.txt</code> file containing the deployed backend link.</li>
+      <li><strong>No leading or trailing spaces</strong> around the link.</li>
+      <li>Submit the <strong>backend URL only</strong> (e.g. <code>https://crewai-server.onrender.com</code>), not the frontend URL.</li>
+      <li>Include the CrewAI GitHub repository link as well.</li>
+    </ul>
+  </div>
+
+  <!-- EXAMPLE NODE.JS SERVER -->
+  <h2 class="fade">Example Node.js Express Implementation</h2>
+
+  <div class="card fade">
+    <h3>server/src/routes/agents.js</h3>
+<pre>import express from 'express';
+const app = express();
+app.use(express.json());
+
+// GET /agent1 redirects to the interactive frontend page
+app.get('/agent1', (req, res) => {
+  res.redirect(302, '/projects/blog-post-crew');
+});
+
+// POST /agent1 processes text input and returns {"output": "..."}
+app.post('/agent1', async (req, res) => {
+  const input = req.body?.input;
+  if (!input) {
+    return res.status(400).json({ error: 'Field "input" is required.' });
+  }
+
+  // Execute project 1 (CrewAI Blog Post Crew)
+  const output = await runCrewAIAgent(1, input);
+  return res.json({ output });
+});
+
+// Repeated for /agent2 through /agent10 ...</pre>
+  </div>
+
+  <div class="card fade">
+    <h3>Run locally</h3>
+<pre># Terminal 1: CrewAI agents internal service
+cd agents && .venv\Scripts\python -m app.main
+
+# Terminal 2: Node.js Express backend server
+cd server && npm start
+
+# Terminal 3: Vite React frontend
+cd frontend && npm run dev</pre>
+  </div>
+
+  <!-- PRE-SUBMISSION CHECKLIST -->
+  <h2 class="fade">Pre-Submission Checklist</h2>
+
+  <div class="card fade">
+    <h3>Verify every item before submitting</h3>
+    <ul class="checklist">
+      <li>
+        <strong>Postman test verified:</strong>
+        <br>Method: <code>POST</code>
+        <br>Headers: <code>Content-Type: application/json</code>
+        <br>Body: <code>{"input": "hello"}</code>
+        <br>Response: <code>{"output": "..."}</code> (HTTP 200)
+      </li>
+      <li>
+        <strong>All 10 routes covered:</strong>
+        <br><code>/agent1</code>, <code>/agent2</code>, <code>/agent3</code>, <code>/agent4</code>, <code>/agent5</code>, <code>/agent6</code>, <code>/agent7</code>, <code>/agent8</code>, <code>/agent9</code>, <code>/agent10</code>.
+      </li>
+      <li>
+        <strong>Redirects verified:</strong>
+        <br><code>GET /agent1</code> redirects to <code>/projects/blog-post-crew</code>, etc.
+      </li>
+      <li>
+        <strong>GitHub repository:</strong>
+        <br>CrewAI repository committed and pushed to GitHub with clean instructions.
+      </li>
+      <li>
+        <strong>Final file:</strong>
+        <br>A <code>.txt</code> file containing the live deployed backend URL (e.g. <code>https://crewai-server.onrender.com</code>) and GitHub repository URL with no leading or trailing whitespace.
+      </li>
+    </ul>
+  </div>
+
+</main>
+
+<script>
+  const items = document.querySelectorAll('.fade');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  items.forEach(el => io.observe(el));
+</script>
+</body>
+</html>

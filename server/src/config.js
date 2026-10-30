@@ -33,9 +33,9 @@ export function loadConfig(env = process.env) {
     jsonLimit: env.JSON_LIMIT ?? '100kb',
 
     // Runs that one address may start per window.
-    rateLimitRuns: num(['RATE_LIMIT', 'RATE_LIMIT_RUNS'], 5),
+    rateLimitRuns: num(['RATE_LIMIT', 'RATE_LIMIT_RUNS'], 100),
     rateLimitWindowMs: num('RATE_LIMIT_WINDOW_MS', 60 * 60 * 1000),
-    maxConcurrentRuns: num('MAX_CONCURRENT_RUNS', 3),
+    maxConcurrentRuns: num('MAX_CONCURRENT_RUNS', 20),
 
     agentTimeoutMs: num('AGENT_TIMEOUT_MS', 15 * 60 * 1000),
     runTtlMs: num('RUN_TTL_MS', 30 * 60 * 1000),
